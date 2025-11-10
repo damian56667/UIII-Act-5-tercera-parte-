@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Lista Clientes{% endblock %}
+{% block content %}
+<h3>Lista de Clientes</h3>
+<a class="btn btn-success mb-3" href="{% url 'agregar_cliente' %}">Agregar Cliente</a>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th><th>Nombre</th><th>Apellido</th><th>Email</th><th>Tel</th><th>Empleado</th><th>Producto</th><th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in clientes %}
+    <tr>
+      <td>{{ c.id }}</td>
+      <td>{{ c.nombre }}</td>
+      <td>{{ c.apellido }}</td>
+      <td>{{ c.email }}</td>
+      <td>{{ c.telefono }}</td>
+      <td>{% if c.empleado %}{{ c.empleado.nombre }} {{ c.empleado.apellido }}{% else %}-{% endif %}</td>
+      <td>{% if c.producto %}{{ c.producto.nombre }}{% else %}-{% endif %}</td>
+      <td>
+        <a class="btn btn-info btn-sm" href="{% url 'actualizar_cliente' c.id %}">Editar</a>
+        <a class="btn btn-danger btn-sm" href="{% url 'borrar_cliente' c.id %}">Borrar</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="8">No hay clientes registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
